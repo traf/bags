@@ -16,178 +16,104 @@
             --color-background: #0D0D0E;
             --color-accent: #02ff40;
             --color-accent-glow: #02ff4040;
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --animate-marquee: marquee 40s linear infinite;
+            --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
         }
-        @font-face {
-            font-family: 'Open Runde';
-            src: url('assets/or-medium.woff2') format('woff2');
-            font-style: normal;
-            font-weight: 500;
-        }
-        @font-face {
-            font-family: 'Open Runde';
-            src: url('assets/or-bold.woff2') format('woff2');
-            font-style: normal;
-            font-weight: 700;
-        }
+        @font-face { font-family: 'Open Runde'; src: url('assets/or-medium.woff2') format('woff2'); font-weight: 500; }
+        @font-face { font-family: 'Open Runde'; src: url('assets/or-bold.woff2') format('woff2'); font-weight: 700; }
 
-        @keyframes slideInRight {
-            0% { opacity: 0; filter: blur(8px); transform: translateX(40px); }
-            100% { opacity: 1; filter: blur(0); transform: translateX(0); }
-        }
-        @keyframes slideOutLeft {
-            0% { opacity: 1; filter: blur(0); transform: translateX(0); }
-            100% { opacity: 0; filter: blur(8px); transform: translateX(-40px); }
-        }
-        @keyframes slideInLeft {
-            0% { opacity: 0; filter: blur(8px); transform: translateX(-40px); }
-            100% { opacity: 1; filter: blur(0); transform: translateX(0); }
-        }
-        @keyframes slideOutRight {
-            0% { opacity: 1; filter: blur(0); transform: translateX(0); }
-            100% { opacity: 0; filter: blur(8px); transform: translateX(40px); }
-        }
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 24px var(--color-accent-glow); }
-            50% { box-shadow: 0 0 48px var(--color-accent-glow); }
-        }
-        .marquee-track {
-            display: flex;
-            width: max-content;
-            animation: marquee var(--duration, 30s) linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-slide-in-right {
-            animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-        .animate-slide-out-left {
-            animation: slideOutLeft 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
-        }
-        .animate-slide-in-left {
-            animation: slideInLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-        .animate-slide-out-right {
-            animation: slideOutRight 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
-        }
-        .animate-pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
+        @keyframes slideIn { from { opacity: 0; filter: blur(8px); transform: translateX(var(--dir, 40px)); } to { opacity: 1; filter: blur(0); transform: translateX(0); } }
+        @keyframes slideOut { from { opacity: 1; filter: blur(0); transform: translateX(0); } to { opacity: 0; filter: blur(8px); transform: translateX(calc(var(--dir, 40px) * -1)); } }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 24px var(--color-accent-glow); } 50% { box-shadow: 0 0 48px var(--color-accent-glow); } }
+        @keyframes marquee { to { transform: translateX(-50%); } }
+        @keyframes fadeInUp { from { opacity: 0; filter: blur(12px); transform: translateY(40px) scale(0.96); } to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); } }
+        @keyframes overlayIn { from { background-color: transparent; backdrop-filter: blur(0); } to { background-color: rgb(13 13 14 / 0.9); backdrop-filter: blur(4px); } }
+
+        .slide-in-right { --dir: 40px; animation: slideIn 0.4s ease-out forwards; }
+        .slide-out-left { --dir: 40px; animation: slideOut 0.3s ease-in forwards; }
+        .slide-in-left { --dir: -40px; animation: slideIn 0.4s ease-out forwards; }
+        .slide-out-right { --dir: -40px; animation: slideOut 0.3s ease-in forwards; }
+
         .step-slide { @apply hidden absolute w-full; }
         .step-slide.active { @apply flex; }
-        .slides-container { @apply relative min-h-[420px]; }
         body { @apply font-medium; }
         h1, h2, h3, button { @apply font-bold; }
-        .progress-dot { @apply w-3 h-3 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)]; }
-        .progress-dot.active { @apply w-8 bg-accent!; }
-        button:active { @apply scale-[0.98]! transition-transform duration-100 ease-[cubic-bezier(0.34,1.56,0.64,1)]!; }
-        img { @apply pointer-events-none; }
-        #btn-back {
-            overflow: hidden;
-            max-width: 0;
-            padding-left: 0;
-            padding-right: 0;
-            margin-right: 0;
-            opacity: 0;
-            transition: max-width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                        padding 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        margin 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        #btn-back.show {
-            max-width: 100px;
-            padding-left: 2rem;
-            padding-right: 2rem;
-            margin-right: 0.75rem;
-            opacity: 1;
-        }
-        .squircle {
-            border-radius: 40px;
-            corner-shape: squircle;
-      }
+        img { @apply pointer-events-none select-none; }
+        button:active { @apply scale-[0.98]!; }
+        .squircle { border-radius: 40px; corner-shape: squircle; }
+        #btn-back { @apply max-w-0 p-0 mr-0 opacity-0 overflow-hidden transition-all duration-400 ease-bounce; }
+        #btn-back.show { @apply max-w-[100px] py-5 px-8 !pb-5.5 mr-3 opacity-100; }
     </style>
 </head>
 
 <body class="w-full min-h-screen bg-[url('assets/bg.png')] bg-cover bg-center">
-    <div class="w-full min-h-screen flex flex-col items-center justify-center bg-background/90 backdrop-blur-xs p-8">
+    <div id="overlay" class="w-full min-h-screen flex flex-col items-center justify-center p-8" style="animation: overlayIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;">
 
         <!-- Onboarding Card -->
-        <div id="onboarding-card"
-            class="relative w-full max-w-lg flex flex-col bg-white/5 p-12 squircle rounded-full backdrop-blur-md border-x border-b border-t-4 border-white/5 overflow-hidden">
+        <div id="onboarding-card" class="relative w-full max-w-lg flex flex-col bg-white/5 p-12 squircle backdrop-blur-md border-x border-b border-t-4 border-white/5 overflow-hidden opacity-0" style="animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;">
             <!-- Inner top glow -->
-            <div
-                class="absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-accent/10 blur-3xl pointer-events-none">
-            </div>
+            <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-accent/10 blur-3xl pointer-events-none"></div>
 
-        <!-- Stock Ticker -->
-        <div class="w-full -left-12 w-lg -mt-5 mb-10 overflow-hidden relative">
-            <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#191B1A] to-transparent z-10 pointer-events-none"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#191B1A] to-transparent z-10 pointer-events-none"></div>
-            <div class="marquee-track" style="--duration: 40s;">
-                <div class="flex shrink-0 gap-8 pr-6">
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmXB6JDAsUYyndGQXYSa9EREJC8fcSREy9GQwQnnrL8Vmy&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIKITA</span><span class="text-accent text-xs font-semibold">+9,122%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fmetadata.j7tracker.com%2Fimages%2F77136c79c9a64630.png&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">RALPH</span><span class="text-accent text-xs font-semibold">+39%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmX1tfh31MwWsWJfGnxbRpCjmQV1newx6eJCyjxpLghQrQ&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">BITLORD</span><span class="text-red-500 text-xs font-semibold">-19%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmaHs9qisJ8ejdZp7SHHSNhCdfGDe4kDYPxPu9ZkUuWBVG&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SLOPCRAFT</span><span class="text-accent text-xs font-semibold">+907%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbFw5bfvrM2vvSgkE2HnbmiLXmH298oMi4X82hcdDDCQA&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">FKH</span><span class="text-red-500 text-xs font-semibold">-56%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUWRN4H1N7hxse3LBUj6DVDCScg43wN9rXDV4L1XCQS1k&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SPEAR</span><span class="text-accent text-xs font-semibold">+960%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmdtYNRA5Xyfnb9zZtAVji4o4B17LbViSgDskj7PfWNyNW&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIYAM</span><span class="text-accent text-xs font-semibold">+2,321%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxa4ez4uSqKWuzJ3XrQy9aCjbvHnfrmApNGWDdHbBsiX&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">MOCKLY</span><span class="text-accent text-xs font-semibold">+362%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUrD2BTr4MiPcmGaoELqaWQde1XTxhChY8pYerqYfa7mz&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PDF0</span><span class="text-accent text-xs font-semibold">+217%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQkUe5F4GqkcsZz1hXJimoWARe1e8pogE4685t9zZMApf&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PENPEN</span><span class="text-accent text-xs font-semibold">+390%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxQMuXTnZ4qJc94ifhEoJixYfyt9yCttonPFfP2eEJCk&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">VIBED</span><span class="text-red-500 text-xs font-semibold">-2%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbucPjcVcDLd2S9VhbpjjqnNdYUh3FNqhd6kkaifzQ1xF&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">DETECTIVE</span><span class="text-accent text-xs font-semibold">+133%</span></div>
-                </div>
-                <div class="flex shrink-0 gap-8 pr-6">
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmXB6JDAsUYyndGQXYSa9EREJC8fcSREy9GQwQnnrL8Vmy&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIKITA</span><span class="text-accent text-xs font-semibold">+9,122%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fmetadata.j7tracker.com%2Fimages%2F77136c79c9a64630.png&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">RALPH</span><span class="text-accent text-xs font-semibold">+39%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmX1tfh31MwWsWJfGnxbRpCjmQV1newx6eJCyjxpLghQrQ&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">BITLORD</span><span class="text-red-500 text-xs font-semibold">-19%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmaHs9qisJ8ejdZp7SHHSNhCdfGDe4kDYPxPu9ZkUuWBVG&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SLOPCRAFT</span><span class="text-accent text-xs font-semibold">+907%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbFw5bfvrM2vvSgkE2HnbmiLXmH298oMi4X82hcdDDCQA&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">FKH</span><span class="text-red-500 text-xs font-semibold">-56%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUWRN4H1N7hxse3LBUj6DVDCScg43wN9rXDV4L1XCQS1k&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SPEAR</span><span class="text-accent text-xs font-semibold">+960%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmdtYNRA5Xyfnb9zZtAVji4o4B17LbViSgDskj7PfWNyNW&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIYAM</span><span class="text-accent text-xs font-semibold">+2,321%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxa4ez4uSqKWuzJ3XrQy9aCjbvHnfrmApNGWDdHbBsiX&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">MOCKLY</span><span class="text-accent text-xs font-semibold">+362%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUrD2BTr4MiPcmGaoELqaWQde1XTxhChY8pYerqYfa7mz&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PDF0</span><span class="text-accent text-xs font-semibold">+217%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQkUe5F4GqkcsZz1hXJimoWARe1e8pogE4685t9zZMApf&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PENPEN</span><span class="text-accent text-xs font-semibold">+390%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxQMuXTnZ4qJc94ifhEoJixYfyt9yCttonPFfP2eEJCk&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">VIBED</span><span class="text-red-500 text-xs font-semibold">-2%</span></div>
-                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbucPjcVcDLd2S9VhbpjjqnNdYUh3FNqhd6kkaifzQ1xF&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">DETECTIVE</span><span class="text-accent text-xs font-semibold">+133%</span></div>
+            <!-- Stock Ticker -->
+            <div class="w-full -left-12 w-lg -mt-6 mb-12 overflow-hidden relative">
+                <div class="absolute left-0 inset-y-0 w-20 bg-gradient-to-r from-[#191B1A] to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute right-0 inset-y-0 w-20 bg-gradient-to-l from-[#191B1A] to-transparent z-10 pointer-events-none"></div>
+                <div class="flex w-max animate-marquee">
+                    <div class="flex shrink-0 gap-8 pr-6">
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmXB6JDAsUYyndGQXYSa9EREJC8fcSREy9GQwQnnrL8Vmy&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">NIKITA</span><span class="text-accent text-xs font-semibold">+9,122%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fmetadata.j7tracker.com%2Fimages%2F77136c79c9a64630.png&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">RALPH</span><span class="text-accent text-xs font-semibold">+39%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmX1tfh31MwWsWJfGnxbRpCjmQV1newx6eJCyjxpLghQrQ&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">BITLORD</span><span class="text-red-500 text-xs font-semibold">-19%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmaHs9qisJ8ejdZp7SHHSNhCdfGDe4kDYPxPu9ZkUuWBVG&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">SLOPCRAFT</span><span class="text-accent text-xs font-semibold">+907%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbFw5bfvrM2vvSgkE2HnbmiLXmH298oMi4X82hcdDDCQA&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">FKH</span><span class="text-red-500 text-xs font-semibold">-56%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUWRN4H1N7hxse3LBUj6DVDCScg43wN9rXDV4L1XCQS1k&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">SPEAR</span><span class="text-accent text-xs font-semibold">+960%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmdtYNRA5Xyfnb9zZtAVji4o4B17LbViSgDskj7PfWNyNW&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">NIYAM</span><span class="text-accent text-xs font-semibold">+2,321%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxa4ez4uSqKWuzJ3XrQy9aCjbvHnfrmApNGWDdHbBsiX&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">MOCKLY</span><span class="text-accent text-xs font-semibold">+362%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUrD2BTr4MiPcmGaoELqaWQde1XTxhChY8pYerqYfa7mz&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">PDF0</span><span class="text-accent text-xs font-semibold">+217%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQkUe5F4GqkcsZz1hXJimoWARe1e8pogE4685t9zZMApf&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">PENPEN</span><span class="text-accent text-xs font-semibold">+390%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxQMuXTnZ4qJc94ifhEoJixYfyt9yCttonPFfP2eEJCk&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">VIBED</span><span class="text-red-500 text-xs font-semibold">-2%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbucPjcVcDLd2S9VhbpjjqnNdYUh3FNqhd6kkaifzQ1xF&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">DETECTIVE</span><span class="text-accent text-xs font-semibold">+133%</span></div>
+                    </div>
+                    <div class="flex shrink-0 gap-8 pr-6">
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmXB6JDAsUYyndGQXYSa9EREJC8fcSREy9GQwQnnrL8Vmy&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">NIKITA</span><span class="text-accent text-xs font-semibold">+9,122%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fmetadata.j7tracker.com%2Fimages%2F77136c79c9a64630.png&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">RALPH</span><span class="text-accent text-xs font-semibold">+39%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmX1tfh31MwWsWJfGnxbRpCjmQV1newx6eJCyjxpLghQrQ&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">BITLORD</span><span class="text-red-500 text-xs font-semibold">-19%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmaHs9qisJ8ejdZp7SHHSNhCdfGDe4kDYPxPu9ZkUuWBVG&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">SLOPCRAFT</span><span class="text-accent text-xs font-semibold">+907%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbFw5bfvrM2vvSgkE2HnbmiLXmH298oMi4X82hcdDDCQA&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">FKH</span><span class="text-red-500 text-xs font-semibold">-56%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUWRN4H1N7hxse3LBUj6DVDCScg43wN9rXDV4L1XCQS1k&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">SPEAR</span><span class="text-accent text-xs font-semibold">+960%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmdtYNRA5Xyfnb9zZtAVji4o4B17LbViSgDskj7PfWNyNW&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">NIYAM</span><span class="text-accent text-xs font-semibold">+2,321%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxa4ez4uSqKWuzJ3XrQy9aCjbvHnfrmApNGWDdHbBsiX&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">MOCKLY</span><span class="text-accent text-xs font-semibold">+362%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUrD2BTr4MiPcmGaoELqaWQde1XTxhChY8pYerqYfa7mz&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">PDF0</span><span class="text-accent text-xs font-semibold">+217%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQkUe5F4GqkcsZz1hXJimoWARe1e8pogE4685t9zZMApf&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">PENPEN</span><span class="text-accent text-xs font-semibold">+390%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxQMuXTnZ4qJc94ifhEoJixYfyt9yCttonPFfP2eEJCk&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">VIBED</span><span class="text-red-500 text-xs font-semibold">-2%</span></div>
+                        <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbucPjcVcDLd2S9VhbpjjqnNdYUh3FNqhd6kkaifzQ1xF&w=48&output=webp" class="size-8 rounded-[30%] squircle"><span class="text-white text-sm font-bold">DETECTIVE</span><span class="text-accent text-xs font-semibold">+133%</span></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
             <!-- Slides Container -->
-            <div class="slides-container">
+            <div class="relative min-h-[420px]">
                 <!-- Step 1: Welcome -->
-                <div class="step-slide active flex-col items-center text-center animate-slide-in-right" data-step="0">
+                <div class="step-slide active flex-col items-center text-center slide-in-right" data-step="0">
                     <img src="assets/logo.png" alt="Bags" class="w-16 mb-8">
                     <h1 class="text-4xl text-white tracking-tight mb-2">Welcome to Bags</h1>
                     <p class="text-white/60 text-2xl mb-10">The social stock market for creators</p>
                     <div class="flex flex-col gap-1 w-full">
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/chart-increase.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/chart-increase.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Buy shares in creators you believe in</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/coins-01.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/coins-01.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Price rises as more people invest</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/arrow-turn-backward.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/arrow-turn-backward.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Sell anytime to lock in profits</p>
                         </div>
@@ -196,37 +122,27 @@
 
                 <!-- Step 2: Bonding Curve -->
                 <div class="step-slide flex-col items-center text-center" data-step="1">
-                    <div class="w-16 h-16 squircle bg-accent/15 flex items-center justify-center mb-6">
-                        <img src="https://modul.es/api/icons/huge/chart-breakout-square.svg?color=%2302ff40&stroke=1.5&size=lg"
-                            class="w-10 h-10">
+                    <div class="size-16 squircle bg-accent/15 flex items-center justify-center mb-6">
+                        <img src="https://modul.es/api/icons/huge/chart-breakout-square.svg?color=%2302ff40&stroke=1.5&size=lg" class="size-10">
                     </div>
                     <h1 class="text-4xl text-white tracking-tight mb-2">Bonding Curve</h1>
                     <p class="text-white/60 text-2xl mb-10">Rewards your early believers</p>
                     <div class="flex flex-col gap-1 w-full">
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/arrow-up-02.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/arrow-up-02.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Buy pressure increases share price</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/arrow-down-02.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/arrow-down-02.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Sell pressure decreases share price</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/star.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/star.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Early supporters get the best prices</p>
                         </div>
@@ -235,37 +151,27 @@
 
                 <!-- Step 3: Creator Rewards -->
                 <div class="step-slide flex-col items-center text-center" data-step="2">
-                    <div class="w-16 h-16 squircle bg-accent/15 flex items-center justify-center mb-6">
-                        <img src="https://modul.es/api/icons/huge/user-star-01.svg?color=%2302ff40&stroke=1.5&size=lg"
-                            class="w-10 h-10">
+                    <div class="size-16 squircle bg-accent/15 flex items-center justify-center mb-6">
+                        <img src="https://modul.es/api/icons/huge/user-star-01.svg?color=%2302ff40&stroke=1.5&size=lg" class="size-10">
                     </div>
                     <h1 class="text-4xl text-white tracking-tight mb-2">Creator Rewards</h1>
                     <p class="text-white/60 text-2xl mb-10">Creators earn from every trade</p>
                     <div class="flex flex-col gap-1 w-full">
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/money-receive-02.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/money-receive-02.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">5% of every buy goes to the creator</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/repeat.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/repeat.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Passive income from trading activity</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/user-multiple-02.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/user-multiple-02.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Fans become invested stakeholders</p>
                         </div>
@@ -274,37 +180,27 @@
 
                 <!-- Step 4: Get Started -->
                 <div class="step-slide flex-col items-center text-center" data-step="3">
-                    <div class="w-16 h-16 squircle bg-accent/15 flex items-center justify-center mb-6">
-                        <img src="https://modul.es/api/icons/huge/rocket-01.svg?color=%2302ff40&stroke=1.5&size=lg"
-                            class="w-10 h-10">
+                    <div class="size-16 squircle bg-accent/15 flex items-center justify-center mb-6">
+                        <img src="https://modul.es/api/icons/huge/rocket-01.svg?color=%2302ff40&stroke=1.5&size=lg" class="size-10">
                     </div>
                     <h1 class="text-4xl text-white tracking-tight mb-2">Ready to Trade?</h1>
                     <p class="text-white/60 text-2xl mb-10">Start in under a minute</p>
                     <div class="flex flex-col gap-1 w-full">
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/wallet-02.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/wallet-02.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Connect your wallet or create one</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/dollar-circle.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/dollar-circle.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Add USDC to start trading</p>
                         </div>
-                        <div
-                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
-                            <div
-                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
-                                <img src="https://modul.es/api/icons/huge/shopping-bag-02.svg?color=%2302ff40&stroke=1.5&size=sm"
-                                    class="w-5 h-5">
+                        <div class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div class="size-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/shopping-bag-02.svg?color=%2302ff40&stroke=1.5&size=sm" class="size-5">
                             </div>
                             <p class="text-white/80 text-lg">Buy your first creator shares</p>
                         </div>
@@ -314,34 +210,27 @@
 
             <!-- Navigation -->
             <div class="flex mt-12">
-                <button id="btn-back"
-                    class="py-5 !pb-5.5 bg-white/10 text-white text-2xl squircle hover:bg-white/15 cursor-pointer flex items-center justify-center border-t-3 border-white/10">
-                    <img src="https://modul.es/api/icons/huge/arrow-left-02.svg?color=white&stroke=1.5&size=lg" alt="Back" class="w-6 h-6">
+                <button id="btn-back" class="bg-white/10 text-white text-2xl squircle hover:bg-white/15 cursor-pointer flex items-center justify-center border-t-3 border-white/10">
+                    <img src="https://modul.es/api/icons/huge/arrow-left-02.svg?color=white&stroke=1.5&size=lg" alt="Back" class="size-6">
                 </button>
-                <button id="btn-next"
-                    class="flex-1 py-5 !pb-5.5 px-8 bg-accent text-background text-2xl squircle animate-pulse-glow hover:scale-[1.02] transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer border-t-4 border-white/20">
+                <button id="btn-next" class="flex-1 py-5 !pb-5.5 px-8 bg-accent text-background text-2xl squircle hover:scale-[1.02] transition-transform cursor-pointer border-t-4 border-white/20 animate-pulse-glow">
                     Continue
                 </button>
             </div>
 
             <!-- Progress Dots -->
             <div class="flex justify-center gap-2 mt-8 -mb-4">
-                <div class="progress-dot active rounded-full bg-accent"></div>
-                <div class="progress-dot rounded-full bg-white/20"></div>
-                <div class="progress-dot rounded-full bg-white/20"></div>
-                <div class="progress-dot rounded-full bg-white/20"></div>
+                <div class="size-3 rounded-full bg-white/20 transition-all duration-400 ease-bounce active w-8 bg-accent!"></div>
+                <div class="size-3 rounded-full bg-white/20 transition-all duration-400 ease-bounce"></div>
+                <div class="size-3 rounded-full bg-white/20 transition-all duration-400 ease-bounce"></div>
+                <div class="size-3 rounded-full bg-white/20 transition-all duration-400 ease-bounce"></div>
             </div>
-
         </div>
-
     </div>
-
-                </div>
-            </div>
 
     <script>
         const slides = document.querySelectorAll('.step-slide');
-        const dots = document.querySelectorAll('.progress-dot');
+        const dots = document.querySelectorAll('[class*="rounded-full"][class*="bg-white/20"], [class*="rounded-full"][class*="bg-accent"]');
         const btnNext = document.getElementById('btn-next');
         const btnBack = document.getElementById('btn-back');
         let currentStep = 0;
@@ -353,37 +242,22 @@
 
             const fromSlide = slides[fromIndex];
             const toSlide = slides[toIndex];
+            const isNext = direction === 'next';
 
-            // Clear all animation classes
-            slides.forEach(s => {
-                s.classList.remove('animate-slide-in-right', 'animate-slide-out-left', 'animate-slide-in-left', 'animate-slide-out-right');
-            });
-
-            // Animate out
-            fromSlide.classList.add(direction === 'next' ? 'animate-slide-out-left' : 'animate-slide-out-right');
+            fromSlide.className = 'step-slide active flex-col items-center text-center ' + (isNext ? 'slide-out-left' : 'slide-out-right');
 
             setTimeout(() => {
-                fromSlide.classList.remove('active');
-                toSlide.classList.add('active');
-                toSlide.classList.add(direction === 'next' ? 'animate-slide-in-right' : 'animate-slide-in-left');
+                fromSlide.className = 'step-slide flex-col items-center text-center';
+                toSlide.className = 'step-slide active flex-col items-center text-center ' + (isNext ? 'slide-in-right' : 'slide-in-left');
 
-                // Update dots with bouncy animation
                 dots.forEach((dot, i) => {
                     if (i === toIndex) {
-                        dot.classList.add('active');
-                        dot.classList.remove('bg-white/20');
+                        dot.classList.add('w-8', 'bg-accent!');
                     } else {
-                        dot.classList.remove('active');
-                        dot.classList.add('bg-white/20');
+                        dot.classList.remove('w-8', 'bg-accent!');
                     }
                 });
-
-                // Update buttons
-                if (toIndex === 0) {
-                    btnBack.classList.remove('show');
-                } else {
-                    btnBack.classList.add('show');
-                }
+                btnBack.classList.toggle('show', toIndex !== 0);
                 btnNext.textContent = toIndex === slides.length - 1 ? 'Get Started' : 'Continue';
 
                 currentStep = toIndex;
@@ -395,22 +269,17 @@
             if (currentStep < slides.length - 1) {
                 transition(currentStep, currentStep + 1, 'next');
             } else {
-                // Fade out card and redirect
                 const card = document.getElementById('onboarding-card');
-                card.style.transition = 'opacity 0.4s ease-out, filter 0.4s ease-out, transform 0.4s ease-out';
+                card.style.transition = 'opacity 0.4s, filter 0.4s, transform 0.4s';
                 card.style.opacity = '0';
                 card.style.filter = 'blur(10px)';
                 card.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    window.location.href = 'https://bags.fm';
-                }, 400);
+                setTimeout(() => window.location.href = 'https://bags.fm', 400);
             }
         });
 
         btnBack.addEventListener('click', () => {
-            if (currentStep > 0) {
-                transition(currentStep, currentStep - 1, 'prev');
-            }
+            if (currentStep > 0) transition(currentStep, currentStep - 1, 'prev');
         });
     </script>
 </body>
