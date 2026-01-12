@@ -50,6 +50,15 @@
             0%, 100% { box-shadow: 0 0 24px var(--color-accent-glow); }
             50% { box-shadow: 0 0 48px var(--color-accent-glow); }
         }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee var(--duration, 30s) linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
         .animate-slide-in-right {
             animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
@@ -91,6 +100,42 @@
             <div
                 class="absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-accent/10 blur-3xl pointer-events-none">
             </div>
+
+        <!-- Stock Ticker -->
+        <div class="w-full -left-12 w-lg -mt-5 mb-12 overflow-hidden relative">
+            <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#191B1A] to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#191B1A] to-transparent z-10 pointer-events-none"></div>
+            <div class="marquee-track" style="--duration: 40s;">
+                <div class="flex shrink-0 gap-8 pr-6">
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmXB6JDAsUYyndGQXYSa9EREJC8fcSREy9GQwQnnrL8Vmy&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIKITA</span><span class="text-accent text-xs font-semibold">+9,122%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fmetadata.j7tracker.com%2Fimages%2F77136c79c9a64630.png&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">RALPH</span><span class="text-accent text-xs font-semibold">+39%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmX1tfh31MwWsWJfGnxbRpCjmQV1newx6eJCyjxpLghQrQ&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">BITLORD</span><span class="text-red-500 text-xs font-semibold">-19%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmaHs9qisJ8ejdZp7SHHSNhCdfGDe4kDYPxPu9ZkUuWBVG&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SLOPCRAFT</span><span class="text-accent text-xs font-semibold">+907%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbFw5bfvrM2vvSgkE2HnbmiLXmH298oMi4X82hcdDDCQA&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">FKH</span><span class="text-red-500 text-xs font-semibold">-56%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUWRN4H1N7hxse3LBUj6DVDCScg43wN9rXDV4L1XCQS1k&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SPEAR</span><span class="text-accent text-xs font-semibold">+960%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmdtYNRA5Xyfnb9zZtAVji4o4B17LbViSgDskj7PfWNyNW&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIYAM</span><span class="text-accent text-xs font-semibold">+2,321%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxa4ez4uSqKWuzJ3XrQy9aCjbvHnfrmApNGWDdHbBsiX&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">MOCKLY</span><span class="text-accent text-xs font-semibold">+362%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUrD2BTr4MiPcmGaoELqaWQde1XTxhChY8pYerqYfa7mz&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PDF0</span><span class="text-accent text-xs font-semibold">+217%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQkUe5F4GqkcsZz1hXJimoWARe1e8pogE4685t9zZMApf&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PENPEN</span><span class="text-accent text-xs font-semibold">+390%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxQMuXTnZ4qJc94ifhEoJixYfyt9yCttonPFfP2eEJCk&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">VIBED</span><span class="text-red-500 text-xs font-semibold">-2%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbucPjcVcDLd2S9VhbpjjqnNdYUh3FNqhd6kkaifzQ1xF&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">DETECTIVE</span><span class="text-accent text-xs font-semibold">+133%</span></div>
+                </div>
+                <div class="flex shrink-0 gap-8 pr-6">
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmXB6JDAsUYyndGQXYSa9EREJC8fcSREy9GQwQnnrL8Vmy&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIKITA</span><span class="text-accent text-xs font-semibold">+9,122%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fmetadata.j7tracker.com%2Fimages%2F77136c79c9a64630.png&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">RALPH</span><span class="text-accent text-xs font-semibold">+39%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmX1tfh31MwWsWJfGnxbRpCjmQV1newx6eJCyjxpLghQrQ&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">BITLORD</span><span class="text-red-500 text-xs font-semibold">-19%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmaHs9qisJ8ejdZp7SHHSNhCdfGDe4kDYPxPu9ZkUuWBVG&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SLOPCRAFT</span><span class="text-accent text-xs font-semibold">+907%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbFw5bfvrM2vvSgkE2HnbmiLXmH298oMi4X82hcdDDCQA&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">FKH</span><span class="text-red-500 text-xs font-semibold">-56%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUWRN4H1N7hxse3LBUj6DVDCScg43wN9rXDV4L1XCQS1k&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">SPEAR</span><span class="text-accent text-xs font-semibold">+960%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmdtYNRA5Xyfnb9zZtAVji4o4B17LbViSgDskj7PfWNyNW&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">NIYAM</span><span class="text-accent text-xs font-semibold">+2,321%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxa4ez4uSqKWuzJ3XrQy9aCjbvHnfrmApNGWDdHbBsiX&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">MOCKLY</span><span class="text-accent text-xs font-semibold">+362%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmUrD2BTr4MiPcmGaoELqaWQde1XTxhChY8pYerqYfa7mz&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PDF0</span><span class="text-accent text-xs font-semibold">+217%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQkUe5F4GqkcsZz1hXJimoWARe1e8pogE4685t9zZMApf&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">PENPEN</span><span class="text-accent text-xs font-semibold">+390%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmQxQMuXTnZ4qJc94ifhEoJixYfyt9yCttonPFfP2eEJCk&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">VIBED</span><span class="text-red-500 text-xs font-semibold">-2%</span></div>
+                    <div class="flex items-center gap-2"><img src="https://wsrv.nl/?url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmbucPjcVcDLd2S9VhbpjjqnNdYUh3FNqhd6kkaifzQ1xF&w=48&output=webp" class="w-8 h-8 rounded-[30%] object-cover squircle"><span class="text-white text-sm font-bold">DETECTIVE</span><span class="text-accent text-xs font-semibold">+133%</span></div>
+                </div>
+            </div>
+        </div>
 
             <!-- Slides Container -->
             <div class="slides-container">
@@ -272,6 +317,9 @@
         </div>
 
     </div>
+
+                </div>
+            </div>
 
     <script>
         const slides = document.querySelectorAll('.step-slide');
