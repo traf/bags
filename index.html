@@ -1,0 +1,348 @@
+<!doctype html>
+<html class="bg-background font-sans">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>BAGS | Onboarding</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <meta property="og:title" content="BAGS | Onboarding">
+    <meta property="og:description" content="The social stock market for creators">
+    <meta property="og:image" content="assets/og.png">
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Open Runde', sans-serif;
+            --color-background: #0D0D0E;
+            --color-accent: #02ff40;
+            --color-accent-glow: #02ff4040;
+        }
+        @font-face {
+            font-family: 'Open Runde';
+            src: url('assets/or-medium.woff2') format('woff2');
+            font-style: normal;
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: 'Open Runde';
+            src: url('assets/or-bold.woff2') format('woff2');
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        @keyframes slideInRight {
+            0% { opacity: 0; filter: blur(8px); transform: translateX(40px); }
+            100% { opacity: 1; filter: blur(0); transform: translateX(0); }
+        }
+        @keyframes slideOutLeft {
+            0% { opacity: 1; filter: blur(0); transform: translateX(0); }
+            100% { opacity: 0; filter: blur(8px); transform: translateX(-40px); }
+        }
+        @keyframes slideInLeft {
+            0% { opacity: 0; filter: blur(8px); transform: translateX(-40px); }
+            100% { opacity: 1; filter: blur(0); transform: translateX(0); }
+        }
+        @keyframes slideOutRight {
+            0% { opacity: 1; filter: blur(0); transform: translateX(0); }
+            100% { opacity: 0; filter: blur(8px); transform: translateX(40px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 24px var(--color-accent-glow); }
+            50% { box-shadow: 0 0 48px var(--color-accent-glow); }
+        }
+        .animate-slide-in-right {
+            animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        .animate-slide-out-left {
+            animation: slideOutLeft 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+        }
+        .animate-slide-in-left {
+            animation: slideInLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        .animate-slide-out-right {
+            animation: slideOutRight 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        .step-slide { @apply hidden absolute w-full; }
+        .step-slide.active { @apply flex; }
+        .slides-container { @apply relative min-h-[420px]; }
+        body { @apply font-medium; }
+        h1, h2, h3, button { @apply font-bold; }
+        .progress-dot { @apply w-3 h-3 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)]; }
+        .progress-dot.active { @apply w-8 bg-accent!; }
+        button:active { @apply scale-[0.98]! transition-transform duration-100 ease-[cubic-bezier(0.34,1.56,0.64,1)]!; }
+        img { @apply pointer-events-none; }
+        .squircle {
+            border-radius: 40px;
+            corner-shape: squircle;
+      }
+    </style>
+</head>
+
+<body class="w-full min-h-screen bg-[url('assets/bg.png')] bg-cover bg-center">
+    <div class="w-full min-h-screen flex flex-col items-center justify-center bg-background/90 backdrop-blur-xs p-8">
+
+        <!-- Onboarding Card -->
+        <div id="onboarding-card"
+            class="relative w-full max-w-lg flex flex-col bg-white/5 p-12 squircle rounded-full backdrop-blur-md border-x border-b border-t-4 border-white/5 overflow-hidden">
+            <!-- Inner top glow -->
+            <div
+                class="absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-accent/10 blur-3xl pointer-events-none">
+            </div>
+
+            <!-- Slides Container -->
+            <div class="slides-container">
+                <!-- Step 1: Welcome -->
+                <div class="step-slide active flex-col items-center text-center animate-slide-in-right" data-step="0">
+                    <img src="assets/logo.png" alt="Bags" class="w-16 mb-8">
+                    <h1 class="text-4xl text-white tracking-tight mb-2">Welcome to Bags</h1>
+                    <p class="text-white/60 text-2xl mb-10">The social stock market for creators</p>
+                    <div class="flex flex-col gap-1 w-full">
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/chart-increase.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Buy shares in creators you believe in</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/coins-01.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Price rises as more people invest</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/arrow-turn-backward.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Sell anytime to lock in profits</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Bonding Curve -->
+                <div class="step-slide flex-col items-center text-center" data-step="1">
+                    <div class="w-16 h-16 squircle bg-accent/15 flex items-center justify-center mb-6">
+                        <img src="https://modul.es/api/icons/huge/chart-breakout-square.svg?color=%2302ff40&stroke=1.5&size=lg"
+                            class="w-10 h-10">
+                    </div>
+                    <h1 class="text-4xl text-white tracking-tight mb-2">Bonding Curve</h1>
+                    <p class="text-white/60 text-2xl mb-10">Rewards your early believers</p>
+                    <div class="flex flex-col gap-1 w-full">
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/arrow-up-02.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Buy pressure increases share price</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/arrow-down-02.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Sell pressure decreases share price</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/star.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Early supporters get the best prices</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Creator Rewards -->
+                <div class="step-slide flex-col items-center text-center" data-step="2">
+                    <div class="w-16 h-16 squircle bg-accent/15 flex items-center justify-center mb-6">
+                        <img src="https://modul.es/api/icons/huge/user-star-01.svg?color=%2302ff40&stroke=1.5&size=lg"
+                            class="w-10 h-10">
+                    </div>
+                    <h1 class="text-4xl text-white tracking-tight mb-2">Creator Rewards</h1>
+                    <p class="text-white/60 text-2xl mb-10">Creators earn from every trade</p>
+                    <div class="flex flex-col gap-1 w-full">
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/money-receive-02.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">5% of every buy goes to the creator</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/repeat.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Passive income from trading activity</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/user-multiple-02.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Fans become invested stakeholders</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Get Started -->
+                <div class="step-slide flex-col items-center text-center" data-step="3">
+                    <div class="w-16 h-16 squircle bg-accent/15 flex items-center justify-center mb-6">
+                        <img src="https://modul.es/api/icons/huge/rocket-01.svg?color=%2302ff40&stroke=1.5&size=lg"
+                            class="w-10 h-10">
+                    </div>
+                    <h1 class="text-4xl text-white tracking-tight mb-2">Ready to Trade?</h1>
+                    <p class="text-white/60 text-2xl mb-10">Start in under a minute</p>
+                    <div class="flex flex-col gap-1 w-full">
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/wallet-02.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Connect your wallet or create one</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/dollar-circle.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Add USDC to start trading</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-left bg-white/5 py-4 px-5 rounded-xl squircle border-t-2 border-white/5">
+                            <div
+                                class="w-9 h-9 shrink-0 flex items-center justify-center bg-accent/10 rounded-lg squircle">
+                                <img src="https://modul.es/api/icons/huge/shopping-bag-02.svg?color=%2302ff40&stroke=1.5&size=sm"
+                                    class="w-5 h-5">
+                            </div>
+                            <p class="text-white/80 text-lg">Buy your first creator shares</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex gap-3 mt-12">
+                <button id="btn-back"
+                    class="hidden py-5 px-8 bg-white/10 text-white text-2xl squircle hover:bg-white/15 transition-all duration-200 cursor-pointer flex items-center justify-center border-t-3 border-white/10">
+                    <img src="https://modul.es/api/icons/huge/arrow-left-02.svg?color=white&stroke=1.5&size=lg"
+                        alt="Back" class="w-6 h-6">
+                </button>
+                <button id="btn-next"
+                    class="flex-1 py-5 px-8 bg-accent text-background text-2xl squircle animate-pulse-glow hover:scale-[1.02] transition-transform duration-200 cursor-pointer border-t-4 border-white/20">
+                    Continue
+                </button>
+            </div>
+
+            <!-- Progress Dots -->
+            <div class="flex justify-center gap-2 mt-8 -mb-4">
+                <div class="progress-dot active rounded-full bg-accent"></div>
+                <div class="progress-dot rounded-full bg-white/20"></div>
+                <div class="progress-dot rounded-full bg-white/20"></div>
+                <div class="progress-dot rounded-full bg-white/20"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.step-slide');
+        const dots = document.querySelectorAll('.progress-dot');
+        const btnNext = document.getElementById('btn-next');
+        const btnBack = document.getElementById('btn-back');
+        let currentStep = 0;
+        let isAnimating = false;
+
+        function transition(fromIndex, toIndex, direction) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const fromSlide = slides[fromIndex];
+            const toSlide = slides[toIndex];
+
+            // Clear all animation classes
+            slides.forEach(s => {
+                s.classList.remove('animate-slide-in-right', 'animate-slide-out-left', 'animate-slide-in-left', 'animate-slide-out-right');
+            });
+
+            // Animate out
+            fromSlide.classList.add(direction === 'next' ? 'animate-slide-out-left' : 'animate-slide-out-right');
+
+            setTimeout(() => {
+                fromSlide.classList.remove('active');
+                toSlide.classList.add('active');
+                toSlide.classList.add(direction === 'next' ? 'animate-slide-in-right' : 'animate-slide-in-left');
+
+                // Update dots with bouncy animation
+                dots.forEach((dot, i) => {
+                    if (i === toIndex) {
+                        dot.classList.add('active');
+                        dot.classList.remove('bg-white/20');
+                    } else {
+                        dot.classList.remove('active');
+                        dot.classList.add('bg-white/20');
+                    }
+                });
+
+                // Update buttons
+                btnBack.classList.toggle('hidden', toIndex === 0);
+                btnNext.textContent = toIndex === slides.length - 1 ? 'Get Started' : 'Continue';
+
+                currentStep = toIndex;
+                isAnimating = false;
+            }, 300);
+        }
+
+        btnNext.addEventListener('click', () => {
+            if (currentStep < slides.length - 1) {
+                transition(currentStep, currentStep + 1, 'next');
+            } else {
+                // Fade out card and redirect
+                const card = document.getElementById('onboarding-card');
+                card.style.transition = 'opacity 0.4s ease-out, filter 0.4s ease-out, transform 0.4s ease-out';
+                card.style.opacity = '0';
+                card.style.filter = 'blur(10px)';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    window.location.href = 'https://bags.fm';
+                }, 400);
+            }
+        });
+
+        btnBack.addEventListener('click', () => {
+            if (currentStep > 0) {
+                transition(currentStep, currentStep - 1, 'prev');
+            }
+        });
+    </script>
+</body>
+
+</html>
